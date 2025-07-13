@@ -1,4 +1,5 @@
 //EXPRESS ROUTER (ES UN MIDDLEWARE)
+import "dotenv/config";
 import express from 'express';
 import cors from "cors";
 //Comillas dobles en la clave es un JSON (es un archivo de texto)
@@ -32,7 +33,7 @@ app.use((req, res, next) =>{
 });
 
 //Defino el puerto que recibirá las peticiones
-const PORT = 3000;
+const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => console.log(`http://localhost:${PORT}`));
 
 
