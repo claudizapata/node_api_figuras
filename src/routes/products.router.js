@@ -1,6 +1,6 @@
 import { Router } from "express";
 //importo la función del controlador
-import { getAllProducts, getSearchProduct, getSearchByCategoria, getSearchById, crearNuevoProduct, reemplazaProduct, deleteProduct } from "../controllers/products.controller.js";
+import { getAllProducts, getSearchProduct, getSearchByIdCategoria, getSearchById, crearNuevoProduct, reemplazaProduct, deleteProduct } from "../controllers/products.controller.js";
 
 const router = Router(); //es una instancia de ese router
                         //Ahora todo se maneja con el Router,por lo tanto hay que reemplazar todos los app.
@@ -9,7 +9,8 @@ router.get("/products", getAllProducts);//La ruta llama al controlador con getAl
 //Los QUERY no están definidos en la RUTA, se pasan extra
 router.get("/products/search", getSearchProduct );
 //Los PARAMS están definidos en la RUTA
-router.get("/products/:id/:category", getSearchByCategoria);
+router.get("/products/:id/:category", getSearchByIdCategoria);
+
 router.get("/products/:id", getSearchById);
 
 /* Rutina para probar el post en POSTMAN

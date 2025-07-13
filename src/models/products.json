@@ -4,53 +4,46 @@
     "name": "Caballero Medieval",
     "descrip": "Guerrero de las Cruzadas, expediciones militares",
     "price": 15,
-    "categories": [
-      "guerrero",
-      "edad media"
-    ]
+    "category": ["guerrero", "edad media"]
   },
   {
     "id": 2,
-    "name": "Armadura italiana variada",
+    "name": "Armadura medieval",
     "price": 120,
-    "categories": [
-      "vestimenta",
-      "edad media"
-    ]
+    "category": ["guerra", "edad media"]
   },
   {
     "id": 3,
     "name": "Armadura italiana variada",
-    "price": 120
+    "price": 45,
+    "category": ["guerra", "vestimenta"]
   },
   {
     "id": 5,
     "name": "Snaiper Alemán",
     "descrip": "Uniforme utilizado en la campaña de Napoleón en 1812 ",
     "price": 90,
-    "categories": [
-      "guerrero",
-      "vestimenta"
-    ]
+    "category": ["guerra", "vestimenta"]
   },
   {
     "id": 6,
-    "name": "Tradotta",
-    "descrip": "Parte de un tranvía utilizado en 2da guerra mundial",
-    "price": 30,
-    "categories": [
-      "transporte",
-      "guerra"
-    ]
+    "name": "Gladiador",
+    "descrip": "Cruzadas medievales",
+    "price": 60,
+    "category": ["vestimenta", "guerrero"]
   },
   {
     "id": 7,
-    "name": "Guerrero Alemán",
-    "descrip": "Vestimenta de la Segunda Guerra Mundial",
-    "price": 90,
-    "categories": [
-      "vestimenta",
-      "guerrero"
-    ]
+    "name": "Vikingo",
+    "descrip": "Exploradores ingleses",
+    "price": 78,
+    "category": ["invasores", "antigüedad"]
+  },
+  {
+    "id": 8,
+    "name": "Napoleon",
+    "descrip": "primera guerra mundial",
+    "price": 78,
+    "category": ["guerrero", "emperador"]
   }
 ]

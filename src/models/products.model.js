@@ -12,7 +12,6 @@ const jsonPath = path.join(__dirname, "./products.json");//creo el path para lee
 const json = fs.readFileSync(jsonPath, "utf-8");//para leer directamente el json, y que no genere un buffer
 
 const products = JSON.parse(json);
-console.log(products); // products es un array/objeto de javaScript
 
 //el modelo va a exponer varios MÉTODOS
 export const getAllProducts = () =>{

@@ -23,7 +23,7 @@ export const getSearchProduct = async (req,res) =>{
 res.json(filtrados);
 };
 
-export const getSearchByCategoria = async (req, res) =>{
+export const getSearchByIdCategoria = async (req, res) =>{
     const {id, category} = req.params;//capturo el id y la categoria ingresados en la URL x el usuario
     const products = model.getAllProducts();
     const product = products.find((item) => item.id == id && item.category == category);
@@ -44,10 +44,10 @@ export const getSearchById = async (req, res) =>{
 };
 
 export const crearNuevoProduct = (req, res) =>{
-  const {name, descrip, price, categories } = req.body;//lo sacamos del request / voy a recibir un cuerpo en la petición, siempre que tenga un Middleware
+  const {name, descrip, price, category } = req.body;//lo sacamos del request / voy a recibir un cuerpo en la petición, siempre que tenga un Middleware
   //con esa información voy a hacer, en este caso, uh objeto nuevo
   //const products = model.getAllProductos();
-  const newProduct =  model.createProduct({name, descrip, price, categories});//Llamo al modelo y le paso los datos 
+  const newProduct =  model.createProduct({name, descrip, price, category});//Llamo al modelo y le paso los datos 
   //Con un try catch en newProduct capturamos un error al guardar el producto en la BD
   res.status(201).json(newProduct);
 };
