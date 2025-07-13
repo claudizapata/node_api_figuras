@@ -1,0 +1,56 @@
+[
+  {
+    "id": 1,
+    "name": "Caballero Medieval",
+    "descrip": "Guerrero de las Cruzadas, expediciones militares",
+    "price": 15,
+    "categories": [
+      "guerrero",
+      "edad media"
+    ]
+  },
+  {
+    "id": 2,
+    "name": "Armadura italiana variada",
+    "price": 120,
+    "categories": [
+      "vestimenta",
+      "edad media"
+    ]
+  },
+  {
+    "id": 3,
+    "name": "Armadura italiana variada",
+    "price": 120
+  },
+  {
+    "id": 5,
+    "name": "Snaiper Alemán",
+    "descrip": "Uniforme utilizado en la campaña de Napoleón en 1812 ",
+    "price": 90,
+    "categories": [
+      "guerrero",
+      "vestimenta"
+    ]
+  },
+  {
+    "id": 6,
+    "name": "Tradotta",
+    "descrip": "Parte de un tranvía utilizado en 2da guerra mundial",
+    "price": 30,
+    "categories": [
+      "transporte",
+      "guerra"
+    ]
+  },
+  {
+    "id": 7,
+    "name": "Guerrero Alemán",
+    "descrip": "Vestimenta de la Segunda Guerra Mundial",
+    "price": 90,
+    "categories": [
+      "vestimenta",
+      "guerrero"
+    ]
+  }
+]

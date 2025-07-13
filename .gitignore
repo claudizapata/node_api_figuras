@@ -1,0 +1,5 @@
+#==========Carpeta Node Modules (Package-lock.json)===========
+node_modules
+
+#==========Archivo de variables de entorno=================================
+.env
