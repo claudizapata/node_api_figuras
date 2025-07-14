@@ -13,7 +13,12 @@ Postman simplifica el desarrollo y las pruebas de APIs, permitiendo crear y comp
 
 Archivo INDEX.js: es el punto de entrada.
 
-La APP se ejecuta desde la terminal con "npm run dev".
+Archivo products.model.js se modificó para utilizar Firestore en lugar de un archivo JSON local. Este archivo contendrá métodos para interactuar con la colección de productos en Firestore.
+getDocs:
+● Este método se utiliza para obtener todos los documentos de una colección.
+
+
+======================La APP se ejecuta desde la terminal con "npm run dev"===================================
 
 El archivo data.js dentro de la carpeta models, contiene el código para inicializar FIREBASE y FIRESTORE.
 

@@ -19,7 +19,7 @@ const productsCollection = collection(db, "products");
 //el modelo va a exponer varios MÉTODOS
 export const getAllProducts = async () =>{
     try{
-      const snapshot = await getDocs(productsCollection);
+      const snapshot = await getDocs(productsCollection);//getDocs: Este método se utiliza para obtener todos los documentos de una colección.
       return snapshot.docs.map((item) => ({id: item.id, ...item.data()}));//Va a expandir todo lo que está en data, menos el id
 
     }catch (error){
