@@ -1,15 +1,15 @@
 import { Router } from "express";
 //importo la función del controlador
-import { getAllProducts, getSearchProduct, getSearchByIdCategoria, getSearchById, crearNuevoProduct, reemplazaProduct, deleteProduct } from "../controllers/products.controller.js";
+import { getAllProducts, getSearchByName, getSearchById, crearNuevoProduct, reemplazaProduct, deleteProduct } from "../controllers/products.controller.js";
 
 const router = Router(); //es una instancia de ese router
                         //Ahora todo se maneja con el Router,por lo tanto hay que reemplazar todos los app.
 //=============LLAMA A RUTINA GET=============================================================
 router.get("/products", getAllProducts);//La ruta llama al controlador con getAllProducts
 //Los QUERY no están definidos en la RUTA, se pasan extra
-router.get("/products/search", getSearchProduct );
+router.get("/products/search", getSearchByName );
 //Los PARAMS están definidos en la RUTA
-router.get("/products/:id/:category", getSearchByIdCategoria);
+//router.get("/products/:id/:category", getSearchByIdCategoria);
 
 router.get("/products/:id", getSearchById);
 

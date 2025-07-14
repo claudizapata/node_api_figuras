@@ -8,9 +8,6 @@ Esta aplicación tiene como objetivo que el usuario pueda interactuar con la bas
 
 Los datos se encuentran alojados en la nube mediante Firestore en el entorno de desarrollo del SDK Firebase.
 
-POSTMAN: El usuario podrá explorar la colección de datos mediante Postman. Podrá hacer peticiones o enviar datos para crear o actualizar registros en el servidor.
-Postman simplifica el desarrollo y las pruebas de APIs, permitiendo crear y compartir solicitudes de manera rápida y segura.
-
 Archivo INDEX.js: es el punto de entrada.
 
 Archivo products.model.js se modificó para utilizar Firestore en lugar de un archivo JSON local. Este archivo contendrá métodos para interactuar con la colección de productos en Firestore.
@@ -23,20 +20,19 @@ getDocs:
 El archivo data.js dentro de la carpeta models, contiene el código para inicializar FIREBASE y FIRESTORE.
 
 
+POSTMAN: El usuario podrá explorar la colección de datos mediante Postman. Podrá hacer peticiones o enviar datos para crear o actualizar registros en el servidor.
+Postman simplifica el desarrollo y las pruebas de APIs, permitiendo crear y compartir solicitudes de manera rápida y segura.
+
 Módulos GET (TRAE PRODUCTOS):
 GET: /api/products devuelve todos los productos de la Base de Datos:
 http://localhost:3000/api/products/
-
-Petición que trae solo el/los registro/s que coincidan con el "name" y "category" consultados:(NO es necesario que coincida exactamente el nombre y la categoría)
-(En este caso name=Armadura y categoria=guerra)
-http://localhost:3000/api/products/search?name=armadura&category=guerra 
 
 Petición que trae el registro por determinado id:
 GET /api/products/:id devuelve el producto por el ID indicado.(En este caso solo el que tenga el id=1)
 http://localhost:3000/api/products/1
 
 Petición que trae el/los registro/s por determinado name:(NO es necesario que el name coincida exactamente)
-(En este caso solo el que tenga el name=medieval)
+(En este caso solo el que contenga como nombre o una parte, name=medieval)
 http://localhost:3000/api/products/search?name=medieval
 
 

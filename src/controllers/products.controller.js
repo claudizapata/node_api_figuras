@@ -10,46 +10,63 @@ export const getAllProducts = async (req, res) => {
     //...igual a la función en el servicio
 };
 
-export const getSearchProduct = (req,res) =>{
+export const getSearchByName = async (req,res) =>{
    /*  console.log(req.query);
     res.json(products); */
     const {name} = req.query;
-
-    const products = model.getAllProducts();
-
+    try{
+       const products = await model.getAllProducts(name);
+       if (!products || products.length === 0){
+        return res.status(404).json({error: "No existen productos en la base de datos"});
+    };
     const filtrados = products.filter((item) => 
         item.name.toLowerCase().includes(name.toLowerCase())
-);
-res.json(filtrados);
-};
+    );
+    if (filtrados.length === 0){
+      return res.status(404).json({error: "No se encontraron productos con ese nombre"});
+    }
+    res.json(filtrados);
 
+    }catch(error){
+      console.error(error);
+    }  
+};
+/* 
 export const getSearchByIdCategoria = async (req, res) =>{
     const {id, category} = req.params;//capturo el id y la categoria ingresados en la URL x el usuario
-    const products = model.getAllProducts();
-    const product = products.find((item) => item.id == id && item.category == category);
+    //const products = model.getAllProducts();
+    const product = await model.getProductByIdCategory(id, category);
     if (!product){
         res.status(404).json({error: "No existe el producto"});
-        };
+    };
     res.status(201).json(product);
-};
+}; */
 
 export const getSearchById = async (req, res) =>{
     const {id} = req.params;//capturo el id y la categoria ingresados en la URL x el usuario
-    const products = model.getAllProducts();
-    const product = products.find((item) => item.id == id);
-    if (!product){
+    const productId = await model.getProductById(id);
+    //const products = model.getAllProducts();
+    //const product = products.find((item) => item.id == id);
+    if (!productId){
         res.status(404).json({error: "No existe el producto"});
-        };
-    res.status(201).json(product);
+      }
+    res.json(productId);
 };
 
-export const crearNuevoProduct = (req, res) =>{
+export const crearNuevoProduct = async (req, res) =>{
   const {name, descrip, price, category } = req.body;//lo sacamos del request / voy a recibir un cuerpo en la petición, siempre que tenga un Middleware
   //con esa información voy a hacer, en este caso, uh objeto nuevo
   //const products = model.getAllProductos();
-  const newProduct =  model.createProduct({name, descrip, price, category});//Llamo al modelo y le paso los datos 
-  //Con un try catch en newProduct capturamos un error al guardar el producto en la BD
-  res.status(201).json(newProduct);
+  try{
+    const newProduct = await model.createProduct({name, descrip, price, category});//Llamo al modelo y le paso los datos 
+    //Con un try catch en newProduct capturamos un error al guardar el producto en la BD
+    res.status(201).json(newProduct);
+
+  }catch (error){
+    console.error("Error al crear el producto", error);
+    res.status(404).json({error: "Error al crear el producto"});
+  }
+  
 };
 
 

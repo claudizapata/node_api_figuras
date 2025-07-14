@@ -12,7 +12,7 @@ const json = fs.readFileSync(jsonPath, "utf-8");//para leer directamente el json
 const products = JSON.parse(json);
 
 import {db} from "./data.js";
-import { collection, getDocs } from 'firebase/firestore';
+import { collection, getDocs, doc, getDoc, addDoc } from 'firebase/firestore';
 
 const productsCollection = collection(db, "products");
 
@@ -21,26 +21,51 @@ export const getAllProducts = async () =>{
     try{
       const snapshot = await getDocs(productsCollection);//getDocs: Este método se utiliza para obtener todos los documentos de una colección.
       return snapshot.docs.map((item) => ({id: item.id, ...item.data()}));//Va a expandir todo lo que está en data, menos el id
-
     }catch (error){
       console.error(error);
     }
 };
 
-export const getProductById = (id) =>{
-    return products.find((item) => item.id == id);
+export const getProductById = async (id) =>{
+  try{
+    const productId = doc(productsCollection, id);
+    const snapshot = await getDoc(productId);
+    return snapshot.exists() ? {id: snapshot.id, ...snapshot.data()}: null;
+  }catch (error){
+    console.error(error);
+  }
+    //return products.find((item) => item.id == id);
 };
 
-export const createProduct = (data) =>{
-    const newProduct = {//estoy creando un nuevo objeto a partir de los datos que recibo
-        id: products.length + 1,//esto es algo ficticio, se apaga el servidor y se borra
-       ...data,
+/* export const getProductByIdCategory = async (id, category) =>{
+  try{ 
+    const productId = doc(productsCollection, id, category);
+    const snapshot = await getDoc(productId);
+    return snapshot.exists() ? {id: snapshot.id, ...snapshot.data()}: null;
+  }catch (error){
+    console.error(error);
+  }
+    //return products.find((item) => item.id == id);
+}; */
+
+
+//Crear un nuevo producto en FIRESTORE
+export const createProduct = async (data) =>{
+    try{
+      const newProd = await addDoc(productsCollection, {
+        ...data        
+
+      });
+      return {
+        id: newProd.id,
+        ...data
+      };
+    }catch(error){
+      console.error("Error al crear el producto en Firestore:", error);
+      throw error;
+    };
+         //estoy creando un nuevo objeto a partir de los datos que recibo  
   };
-  products.push(newProduct);//Esto despues va a la BD
-  fs.writeFileSync(jsonPath, JSON.stringify(products));//Con esto lo persiste en el json
-  return newProduct;//devuelvo el producto que acabo de crear
-
-};
 
 export const changeProduct = (productId, data) =>{//Recibe el id del elemento a modificar, y los datos    
     const productIndex = products.findIndex((item) => item.id === productId);//Busca el elemento por el id
