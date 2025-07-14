@@ -5,12 +5,12 @@
 //0000 En el CONTROLADOR tengo que llamar al SERVICIO para que me dé los datos  0000
 import * as model from '../models/products.model.js';
 
-export const getAllProducts = (req, res) => {
-    res.json(model.getAllProducts());//Se usaría service. si la funcion en este módulo se llamase...
+export const getAllProducts = async (req, res) => {
+    res.json(await model.getAllProducts());//Se usaría service. si la funcion en este módulo se llamase...
     //...igual a la función en el servicio
 };
 
-export const getSearchProduct = async (req,res) =>{
+export const getSearchProduct = (req,res) =>{
    /*  console.log(req.query);
     res.json(products); */
     const {name} = req.query;

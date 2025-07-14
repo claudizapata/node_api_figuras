@@ -15,6 +15,8 @@ Archivo INDEX.js: es el punto de entrada.
 
 La APP se ejecuta desde la terminal con "npm run dev".
 
+El archivo data.js dentro de la carpeta models, contiene el código para inicializar FIREBASE y FIRESTORE.
+
 
 Módulos GET (TRAE PRODUCTOS):
 GET: /api/products devuelve todos los productos de la Base de Datos:
