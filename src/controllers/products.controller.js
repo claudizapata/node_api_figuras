@@ -61,27 +61,28 @@ export const crearNuevoProduct = async (req, res) =>{
     const newProduct = await model.createProduct({name, descrip, price, category});//Llamo al modelo y le paso los datos 
     //Con un try catch en newProduct capturamos un error al guardar el producto en la BD
     res.status(201).json(newProduct);
-
   }catch (error){
     console.error("Error al crear el producto", error);
     res.status(404).json({error: "Error al crear el producto"});
-  }
-  
+  }  
 };
 
 
-export const reemplazaProduct= (req, res) =>{
-  const productId = parseInt(req.params.id, 10);//base 10, puede ser octal o binario, etc
+export const reemplazaProduct= async (req, res) =>{
   const product = req.body;
-
-  const updateProduct = model.changeProduct(productId, product);
-
-  if (!updateProduct){
-    return res.status(404).json({error:"Producto no encontrado"});
-  };
-
-  res.status(204).json(updateProduct);  
+  const productId = req.params.id;//base 10, puede ser octal o binario, etc
   
+    try{
+      const updateProduct = await model.changeProduct(productId, product);
+
+    if (!updateProduct){
+      return res.status(404).json({error:"Producto no encontrado"});
+    };
+    res.status(204).json(updateProduct);//Se actualizó y devuelve el objeto actualizado
+  }catch(error){
+    console.error("Error encontrado", error);
+    res.status(500).json({error: "Error al actualizar el producto"});
+  }
 } ;
 
 export const deleteProduct = (req, res) =>{

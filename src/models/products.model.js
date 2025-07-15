@@ -12,7 +12,7 @@ const json = fs.readFileSync(jsonPath, "utf-8");//para leer directamente el json
 const products = JSON.parse(json);
 
 import {db} from "./data.js";
-import { collection, getDocs, doc, getDoc, addDoc } from 'firebase/firestore';
+import { collection, getDocs, doc, getDoc, addDoc, updateDoc } from 'firebase/firestore';
 
 const productsCollection = collection(db, "products");
 
@@ -53,13 +53,9 @@ export const getProductById = async (id) =>{
 export const createProduct = async (data) =>{
     try{
       const newProd = await addDoc(productsCollection, {
-        ...data        
-
+        ...data 
       });
-      return {
-        id: newProd.id,
-        ...data
-      };
+      return {id: newProd.id, ...data};
     }catch(error){
       console.error("Error al crear el producto en Firestore:", error);
       throw error;
@@ -67,18 +63,25 @@ export const createProduct = async (data) =>{
          //estoy creando un nuevo objeto a partir de los datos que recibo  
   };
 
-export const changeProduct = (productId, data) =>{//Recibe el id del elemento a modificar, y los datos    
-    const productIndex = products.findIndex((item) => item.id === productId);//Busca el elemento por el id
-    if (productIndex === -1) return null;
+export const changeProduct = async (productId, data) =>{//Recibe el id del elemento a modificar, y los datos    
+  try{
+    //const productIndex = products.findIndex((item) => item.id === productId);//Busca el elemento por el id
+    const productEnc = doc(productsCollection, productId);
+    const snapshot = await getDoc(productEnc);
 
-    products[productIndex] = {id:productId,  ...data};//copia todas las propiedades del objeto ...data que viene del req.body, y las..
-    //.. agrega al objeto a modificar que es products[productIndex]
-
+    await updateDoc(productEnc, data);
+    //Devuelve el producto actualizado
+    return{id: productId, ...snapshot.data(),
+      ...data}; //sobreescribo con los datos NUEVOS
+  }catch(error){
+      console.error("Error al actualizar el producto:", error);
+      throw error;
+    }
     //Guardo el array products (Ya modificado) en el archivo JSON
-    fs.writeFileSync(jsonPath, JSON.stringify(products, null, 2), "utf-8");//jsonPath: ruta del archivo donde se guarda el JSON(./products.json)
+    //fs.writeFileSync(jsonPath, JSON.stringify(products, null, 2), "utf-8");//jsonPath: ruta del archivo donde se guarda el JSON(./products.json)
     //Convierte el array products a un string JSON  //El null y 2, formatean el JSON con indentación de 2 espacios
     //"utf-8": codificación del texto usada al escribir el archivo
-    return products[productIndex];//respondo con ese nuevo producto para que se vea
+    //return products[productIndex];//respondo con ese nuevo producto para que se vea
 };
 
 export const deleteProduct = (id) => {//EL MODELO maneja los datos
