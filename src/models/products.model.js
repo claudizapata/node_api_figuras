@@ -8,11 +8,11 @@ import path from 'path';
 const __dirname = import.meta.dirname;
 
 const jsonPath = path.join(__dirname, "./products.json");//creo el path para leer el archivo products.json
-const json = fs.readFileSync(jsonPath, "utf-8");//para leer directamente el json, y que no genere un buffer
-const products = JSON.parse(json);
+//const json = fs.readFileSync(jsonPath, "utf-8");//para leer directamente el json, y que no genere un buffer
+//const products = JSON.parse(json);
 
 import {db} from "./data.js";
-import { collection, getDocs, doc, getDoc, addDoc, updateDoc } from 'firebase/firestore';
+import { collection, getDocs, doc, getDoc, addDoc, updateDoc, deleteDoc } from 'firebase/firestore';
 
 const productsCollection = collection(db, "products");
 
@@ -84,15 +84,28 @@ export const changeProduct = async (productId, data) =>{//Recibe el id del eleme
     //return products[productIndex];//respondo con ese nuevo producto para que se vea
 };
 
-export const deleteProduct = (id) => {//EL MODELO maneja los datos
-    const productIndex = products.findIndex((item) => item.id === id);//El modelo busca si el producto existe
+export const deleteProduct = async (id) => {//EL MODELO maneja los datos
+  try{
+     const productEnc = doc(productsCollection, id);
+      const snapshot = await getDoc(productEnc);
+
+      if(!snapshot.exists()){
+        return null; //Producto no encontrado
+      }
+      await deleteDoc(productEnc)
+      return{id, ...snapshot.data()}//Devuelve los datos eliminados
+  }catch(error){
+      console.error("Error al eliminar el producto:", error);
+      throw new Error ("No se pudo eliminar el producto");
+    }
+};
     
-    if (productIndex == -1){
+    
+   /*  if (productIndex == -1){
       return null;//NO es STATUS porque responde datos. STATUS va en el controlador porque le responde al cliente
     }else{
       const product = products.splice(productIndex, 1);//quita 1 producto del array y lo guarda en product
       fs.writeFileSync(jsonPath, JSON.stringify(products));//Con esto lo persiste en el json
       return product;
-    };
+    }; */
     
-};

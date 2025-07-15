@@ -70,7 +70,7 @@ export const crearNuevoProduct = async (req, res) =>{
 
 export const reemplazaProduct= async (req, res) =>{
   const product = req.body;
-  const productId = req.params.id;//base 10, puede ser octal o binario, etc
+  const productId = req.params.id;
   
     try{
       const updateProduct = await model.changeProduct(productId, product);
@@ -85,14 +85,18 @@ export const reemplazaProduct= async (req, res) =>{
   }
 } ;
 
-export const deleteProduct = (req, res) =>{
-  const productId = parseInt(req.params.id,10);//Recibe los datos y los parsea
+export const deleteProduct = async (req, res) =>{
+  //const product = req.body;
+  const productId = req.params.id;//Recibe los datos y los parsea
+  try{
+    const eliminadoProduct = await model.deleteProduct(productId);//LLama al modelo, y abajo chequea si se borró
 
-  const product = model.deleteProduct(productId);//LLama al modelo, y abajo chequea si se borró
-
-   if (!product){
-      return res.status(404).json({error: "Producto no encontrado"});
-    };
-  
-  res.status(204).send();//Acá responde que se borró
+    if (!eliminadoProduct){
+        return res.status(404).json({error: "Producto no encontrado"});
+      };
+       res.status(204).send();//Acá responde que se borró
+  }catch(error){
+    console.error("Error encontrado", error);
+    res.status(500).json({error: "Error al actualizar el producto"});
+  }
 };   
