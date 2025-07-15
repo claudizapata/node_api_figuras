@@ -90,16 +90,16 @@ export const changeProduct = async (productId, data) =>{//Recibe el id del eleme
 export const changePartProduct = async (productId, data) =>{
   try{
     //Refiere el producto por el id especificado
-    const productEnc = doc(productsCollection, productId);
+    const productRef = doc(productsCollection, productId);
     //Fetch al producto
-    const productDoc = await getDoc(productEnc);
+    const productDoc = await getDoc(productRef);
 
     //Chequea si el producto existe
     if (!productDoc.exists()){
       return null;
     }
     //Update parte del producto con la nueva data
-    await updateDoc(productEnc, data);
+    await updateDoc(productRef, data);
 
     //Devuelve la data del producto updated
     const updatedProduct = {id: productDoc.id, ...productDoc.data(), ...data};
