@@ -89,6 +89,22 @@ export const reemplazaProduct= async (req, res) =>{
   }
 } ;
 
+export const reemplazaPartProduct= async (req, res) =>{
+  const product = req.body;
+  const productId = req.params.id;
+  try{
+    const updatePartProduct = await model.changePartProduct(productId, product);
+  
+    if (!updatePartProduct){
+      return res.status(404).json({error:"Producto no encontrado"});
+    };
+    res.status(204).json(updatePartProduct);//Se actualizó y devuelve el objeto actualizado
+  }catch(error){
+    console.error("Error encontrado", error);
+    res.status(500).json({error: "Error al actualizar el producto"});
+  }
+} ;
+
 export const deleteProduct = async (req, res) =>{
   //const product = req.body;
   const productId = req.params.id;//Recibe los datos y los parsea

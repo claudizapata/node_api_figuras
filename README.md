@@ -15,7 +15,7 @@ getDocs:
 ● Este método se utiliza para obtener todos los documentos de una colección.
 
 
-======================La APP se ejecuta desde la terminal con "npm run dev"===================================
+=======La APP se ejecuta desde la terminal con "npm run dev"========
 
 El archivo data.js dentro de la carpeta models, contiene el código para inicializar FIREBASE y FIRESTORE.
 
@@ -35,13 +35,14 @@ Petición que trae el/los registro/s por determinado name:(NO es necesario que e
 (En este caso solo el que contenga como nombre o una parte, name=medieval)
 http://localhost:3000/api/products/search?name=medieval
 
-
-
 Módulo POST (CREATE PRODUCT):
 POST /api/products/create envía datos al servidor para crear un nuevo registro.
 
 Módulo PUT (CHANGE PRODUCT):
-PUT /api/products/:id envía datos al servidor para un determinado id. El producto ya existente queda actualizado en alguna de sus propiedades por el cambio que ingresó el usuario.
+PUT /api/products/:id envía datos al servidor para un determinado id. El recurso (producto) ya existente queda reemplazado completamente con los datos proporcionados por el usuario.
+
+Módulo PATCH (CHANGE PART OF PRODUCT):
+PATCH /api/products/:id envía datos al servidor para un determinado id. El producto ya existente queda actualizado SOLO en los campos específicos. Este método solo actualiza la parte que el ususario desea modificar, con los datos que envíe.
 
 Módulo DELETE (Elimina PRODUCT):
 DELETE /api/products/:id elimina el registro de acuerdo al "id" especificado.

@@ -5,9 +5,9 @@ import { error } from 'console';
 import fs from 'fs';
 import path from 'path';
 
-const __dirname = import.meta.dirname;
+//const __dirname = import.meta.dirname;
 
-const jsonPath = path.join(__dirname, "./products.json");//creo el path para leer el archivo products.json
+//const jsonPath = path.join(__dirname, "./products.json");//creo el path para leer el archivo products.json
 //const json = fs.readFileSync(jsonPath, "utf-8");//para leer directamente el json, y que no genere un buffer
 //const products = JSON.parse(json);
 
@@ -72,8 +72,8 @@ export const changeProduct = async (productId, data) =>{//Recibe el id del eleme
 
     await updateDoc(productEnc, data);
     //Devuelve el producto actualizado
-    return{id: productId, ...snapshot.data(),
-      ...data}; //sobreescribo con los datos NUEVOS
+    const productActualizado= {id: productId, ...snapshot.data(), ...data}; //sobreescribo con los datos NUEVOS
+    return productActualizado;
   }catch(error){
       console.error("Error al actualizar el producto:", error);
       throw error;
@@ -84,6 +84,32 @@ export const changeProduct = async (productId, data) =>{//Recibe el id del eleme
     //"utf-8": codificación del texto usada al escribir el archivo
     //return products[productIndex];//respondo con ese nuevo producto para que se vea
 };
+
+export const changePartProduct = async (productId, data) =>{
+  try{
+    //Refiere el producto por el id especificado
+    const productEnc = doc(productsCollection, productId);
+    //Fetch al producto
+    const productDoc = await getDoc(productEnc);
+
+    //Chequea si el producto existe
+    if (!productDoc.exists()){
+      return null;
+    }
+    //Update parte del producto con la nueva data
+    await updateDoc(productEnc, data);
+
+    //Devuelve la data del producto updated
+    const updatedProduct = {id: productDoc.id, ...productDoc.data(), ...data};
+    return updatedProduct;
+
+  }catch (error){
+    console.error("Error al actualizar parte del producto");
+    return null;
+  }
+
+};
+
 
 export const deleteProduct = async (id) => {//EL MODELO maneja los datos
   try{

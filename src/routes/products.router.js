@@ -1,6 +1,6 @@
 import { Router } from "express";
 //importo la función del controlador
-import { getAllProducts, getSearchByName, getSearchById, crearNuevoProduct, reemplazaProduct, deleteProduct } from "../controllers/products.controller.js";
+import { getAllProducts, getSearchByName, getSearchById, crearNuevoProduct, reemplazaProduct, reemplazaPartProduct, deleteProduct } from "../controllers/products.controller.js";
 
 const router = Router(); //es una instancia de ese router
                         //Ahora todo se maneja con el Router,por lo tanto hay que reemplazar todos los app.
@@ -25,6 +25,9 @@ router.post("/products",crearNuevoProduct);//Voy a crearNuevoProducto del Contro
 
 //==============LLAMA A RUTINA PUT==========================================================
 router.put("/products/:id", reemplazaProduct);
+
+//==============LLAMA A RUTINA PATCH==========================================================
+router.patch("/products/:id", reemplazaPartProduct);
 
 //===============LLAMA A RUTINA DELETE======================================================
 router.delete("/products/:id", deleteProduct);//LLama al controlador
