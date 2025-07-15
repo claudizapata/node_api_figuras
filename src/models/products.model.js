@@ -33,6 +33,7 @@ export const getProductById = async (id) =>{
     return snapshot.exists() ? {id: snapshot.id, ...snapshot.data()}: null;
   }catch (error){
     console.error(error);
+    throw error;
   }
     //return products.find((item) => item.id == id);
 };

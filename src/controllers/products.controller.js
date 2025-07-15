@@ -18,18 +18,18 @@ export const getSearchByName = async (req,res) =>{
        const products = await model.getAllProducts(name);
        if (!products || products.length === 0){
         return res.status(404).json({error: "No existen productos en la base de datos"});
-    };
-    const filtrados = products.filter((item) => 
-        item.name.toLowerCase().includes(name.toLowerCase())
-    );
-    if (filtrados.length === 0){
-      return res.status(404).json({error: "No se encontraron productos con ese nombre"});
-    }
-    res.json(filtrados);
+      };
+      const filtrados = products.filter((item) => 
+          item.name.toLowerCase().includes(name.toLowerCase())
+      );
+      if (filtrados.length === 0){
+        return res.status(404).json({error: "No se encontraron productos con ese nombre"});
+      }
+      res.json(filtrados);
 
     }catch(error){
-      console.error(error);
-    }  
+        console.error(error);
+  }  
 };
 /* 
 export const getSearchByIdCategoria = async (req, res) =>{
@@ -44,13 +44,17 @@ export const getSearchByIdCategoria = async (req, res) =>{
 
 export const getSearchById = async (req, res) =>{
     const {id} = req.params;//capturo el id y la categoria ingresados en la URL x el usuario
-    const productId = await model.getProductById(id);
+    try{
+      const productId = await model.getProductById(id);
+       if (!productId || productId.length === 0){
+        return res.status(404).json({error: "No existe un producto con ese id"});
+      };
+      res.status(201).json(productId);
+    }catch (error){
+    console.error("Error al buscar el producto", error);    
     //const products = model.getAllProducts();
-    //const product = products.find((item) => item.id == id);
-    if (!productId){
-        res.status(404).json({error: "No existe el producto"});
-      }
-    res.json(productId);
+    //const product = products.find((item) => item.id == id);   
+  }
 };
 
 export const crearNuevoProduct = async (req, res) =>{
