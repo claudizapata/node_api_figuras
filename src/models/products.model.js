@@ -12,7 +12,7 @@ import path from 'path';
 //const products = JSON.parse(json);
 
 import {db} from "./data.js";
-import { collection, getDocs, doc, getDoc, addDoc, updateDoc, deleteDoc } from 'firebase/firestore';
+import { collection, getDocs, doc, getDoc, addDoc, setDoc, deleteDoc, updateDoc } from 'firebase/firestore';
 
 const productsCollection = collection(db, "products");
 
@@ -28,8 +28,8 @@ export const getAllProducts = async () =>{
 
 export const getProductById = async (id) =>{
   try{
-    const productId = doc(productsCollection, id);
-    const snapshot = await getDoc(productId);
+    const productRef = doc(productsCollection, id);
+    const snapshot = await getDoc(productRef);
     return snapshot.exists() ? {id: snapshot.id, ...snapshot.data()}: null;
   }catch (error){
     console.error(error);
@@ -53,10 +53,8 @@ export const getProductById = async (id) =>{
 //Crear un nuevo producto en FIRESTORE
 export const createProduct = async (data) =>{
     try{
-      const newProd = await addDoc(productsCollection, {
-        ...data 
-      });
-      return {id: newProd.id, ...data};
+      const newProd = await addDoc(productsCollection, data);
+      return {id: newProd.id, ...data};//Devuelve el documento que acabo de crear
     }catch(error){
       console.error("Error al crear el producto en Firestore:", error);
       throw error;
@@ -64,13 +62,17 @@ export const createProduct = async (data) =>{
          //estoy creando un nuevo objeto a partir de los datos que recibo  
   };
 
+  //PUT
 export const changeProduct = async (productId, data) =>{//Recibe el id del elemento a modificar, y los datos    
   try{
     //const productIndex = products.findIndex((item) => item.id === productId);//Busca el elemento por el id
-    const productEnc = doc(productsCollection, productId);
-    const snapshot = await getDoc(productEnc);
+    const productRef = doc(productsCollection, productId);
+    const snapshot = await getDoc(productRef);
 
-    await updateDoc(productEnc, data);
+    if (!snapshot.exists()){
+      return null;
+    }
+    await setDoc(productRef, data);//Reemplazo el producto completo
     //Devuelve el producto actualizado
     const productActualizado= {id: productId, ...snapshot.data(), ...data}; //sobreescribo con los datos NUEVOS
     return productActualizado;
@@ -107,19 +109,18 @@ export const changePartProduct = async (productId, data) =>{
     console.error("Error al actualizar parte del producto");
     return null;
   }
-
 };
 
 
 export const deleteProduct = async (id) => {//EL MODELO maneja los datos
   try{
-     const productEnc = doc(productsCollection, id);
-      const snapshot = await getDoc(productEnc);
+     const productRef = doc(productsCollection, id);
+      const snapshot = await getDoc(productRef);
 
       if(!snapshot.exists()){
         return null; //Producto no encontrado
       }
-      await deleteDoc(productEnc)
+      await deleteDoc(productRef)
       return{id, ...snapshot.data()}//Devuelve los datos eliminados
   }catch(error){
       console.error("Error al eliminar el producto:", error);

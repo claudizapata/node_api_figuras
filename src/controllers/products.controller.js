@@ -49,7 +49,7 @@ export const getSearchById = async (req, res) =>{
        if (!productId || productId.length === 0){
         return res.status(404).json({error: "No existe un producto con ese id"});
       };
-      res.status(201).json(productId);
+      res.status(201).json(productId);//Acá muestra el producto
     }catch (error){
     console.error("Error al buscar el producto", error);    
     //const products = model.getAllProducts();
@@ -117,6 +117,6 @@ export const deleteProduct = async (req, res) =>{
        res.status(204).send();//Acá responde que se borró
   }catch(error){
     console.error("Error encontrado", error);
-    res.status(500).json({error: "Error al actualizar el producto"});
+    res.status(500).json({error: "Error al eliminar el producto"});
   }
 };   
