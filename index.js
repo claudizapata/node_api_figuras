@@ -26,6 +26,13 @@ app.use("/api",productsRouter);//Cuando venga la petición va a buscar en /api/p
 //app.use("/api/v1",productsV1Router);Por si tengo una versión posterior de la api
 
 
+import authRouter from './src/routes/auth.routes.js';
+//import bodyParser from "body-parser";
+app.use(bodyParser.json());//bodyParser.json(): middleware globlal
+
+//Routes
+app.use('/auth', authRouter);
+
 //ERROR HANDLE (404)
 //Para mandar un error desde el Middleware, lo anterior fueron errores lanzados por mi HTML controlados x Express
 app.use((req, res, next) =>{
