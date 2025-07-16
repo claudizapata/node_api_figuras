@@ -1,6 +1,7 @@
 # node_api_figuras
 
-Esta aplicación tiene como objetivo que el usuario pueda interactuar con la base de datos "Productos", mediante una serie de peticiones y envío de datos al servidor, donde se encuentra alojada. Las propiedades de cada registro en el servidor de datos, son:
+Esta aplicación tiene como objetivo que el usuario pueda interactuar con la base de datos "Productos", mediante una serie de peticiones y envío de datos al servidor donde se encuentra alojada. 
+Las propiedades de cada registro en el servidor de datos, son:
 "name": string,
 "descrip": string, 
 "price": num,
@@ -11,16 +12,17 @@ Los datos se encuentran alojados en la nube mediante Firestore en el entorno de 
 Archivo INDEX.js: es el punto de entrada (ARCHIVO ENTRYPOINT)
 
 Archivo products.model.js se modificó para utilizar Firestore en lugar de un archivo JSON local. Este archivo contendrá métodos para interactuar con la colección de productos en Firestore.
-getDocs:
-● Este método se utiliza para obtener todos los documentos de una colección.
 
 
-=======La APP se ejecuta desde la terminal con "npm run dev"========
-
-El archivo data.js dentro de la carpeta models, contiene el código para inicializar FIREBASE y FIRESTORE.
+=======La APP se ejecuta desde la terminal de VSC con "npm run dev"========
 
 
-POSTMAN: El usuario podrá explorar la colección de datos mediante Postman. Podrá hacer peticiones o enviar datos para crear o actualizar registros en el servidor.
+El archivo src/models/data.js, contiene el código para inicializar FIREBASE y FIRESTORE.
+
+
+_POSTMAN_
+
+El usuario podrá explorar la colección de datos mediante Postman. Podrá hacer peticiones o enviar datos para crear o actualizar registros en el servidor.
 Postman simplifica el desarrollo y las pruebas de APIs, permitiendo crear y compartir solicitudes de manera rápida y segura.
 
 _MÉTODOS -PETICIONES Y ENVÍOS-_
@@ -53,9 +55,15 @@ http://localhost:3000/api/products/6
 
 _SEGURIDAD Y AUTENTICACIÓN_
 Se utilizó un servicio de autenticación de terceros "Auth0", que se encarga de todo el proceso de resguardo y validación. De esta manera, no necesitamos contar con una capa específica en la aplicación con este fin. Aunque no escapa a tener que necesitar de un sistema robusto de autenticación hecho a medida.
-Se utilizó el estándar abierto JSON Web Token (JWT) ques es un token en formato JSON que contiene información codificada y firmada digitalmente, lo que permite que el servidor valide su autenticidad si necesidad de consultar un BD o mantener una sesión activa. Se compone de 3 partes codificadas en Base64.
+Se utilizó el estándar abierto JSON Web Token (JWT) ques es un token en formato JSON que contiene información codificada y firmada digitalmente, lo que permite que el servidor valide su autenticidad si necesidad de consultar una BD o mantener una sesión activa. Se compone de 3 partes codificadas en Base64.
 Esta metodología es ideal para servicios API Rest, donde se permite enviar _tokens_ mediante los _headers_ de las peticiones que serán capturadas por los middlewares al llegar a las rutas, y harán la validación para permitir o no el acceso a los resursos.
 
-ruta: src/utils, se creó archivo token-generator.js (Se creó función para generar nuevos tokens)
-ruta: src/routes/auth.routes.js, donde se 
+ruta: _src/utils/token-generator.js_ donde se creó una función para generar nuevos tokens.
 
+ruta: _src/routes/auth.routes.js_ donde se atiende al endpoint /login mediante el método POST.
+
+controlador: src/controllers/auth.controller.js    (El cliente realizará una petición a la ruta de /login enviando en el body de la misma el _email_ y la _password_ que deberán coincidir con un usuario real registrado, lo cual consta en "default_user" de este archivo). Si coinciden, se crea un _token_ para este usuario mediante _generateToken_
+
+_PRUEBAS DE AUTENTICACIÓN_
+Para validar que todo funcione correctamente se utlizó POSTMAN:
+1) Ingresar un token válido con las credenciales definidas en src/utils/tokengenerator.js

@@ -2,6 +2,7 @@
 import "dotenv/config";
 import express from 'express';
 import cors from "cors";
+import bodyParser from "body-parser";
 //Comillas dobles en la clave es un JSON (es un archivo de texto)
 //Sin comillas dobles en la clave es un objeto de JS
 //El MODELO es el que maneja los DATOS
@@ -20,18 +21,19 @@ app.get("/", (req, res) =>{//esta RUTA no se toma porque es general, NO es de PR
     res.json({message: "API Rest en Node.js"});//el json sale con el mensaje formateado 
 });
 
+
 import productsRouter from './src/routes/products.router.js';//Le indico donde están las rutas
 app.use("/api",productsRouter);//Cuando venga la petición va a buscar en /api/products
 //import productsV1Router from './src/routes/products.router.js';Le indico donde están las rutas
 //app.use("/api/v1",productsV1Router);Por si tengo una versión posterior de la api
-
-
+ 
+//==========AGREGAMOS EL ROUTER DE AUTENTICACIÓN============
 import authRouter from './src/routes/auth.routes.js';
 //import bodyParser from "body-parser";
-app.use(bodyParser.json());//bodyParser.json(): middleware globlal
-
+app.use(bodyParser.json());//bodyParser.json(): middleware global que permite leer el body de las peticiones
 //Routes
-app.use('/auth', authRouter);
+app.use('/auth', authRouter);//Solo protejo la ruta: POST /auth/login
+//==========================================================
 
 //ERROR HANDLE (404)
 //Para mandar un error desde el Middleware, lo anterior fueron errores lanzados por mi HTML controlados x Express
