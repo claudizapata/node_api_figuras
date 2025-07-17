@@ -66,4 +66,13 @@ controlador: src/controllers/auth.controller.js    (El cliente realizará una pe
 
 _PRUEBAS DE AUTENTICACIÓN_
 Para validar que todo funcione correctamente se utlizó POSTMAN:
-1) Ingresar un token válido con las credenciales definidas en src/utils/tokengenerator.js
+1) Mediante el método POST, se apunta a la ruta _/auth/login_
+2) en el body las credenciales de default_user en formato JSON
+3) Presionar _send_ 
+4) Si se enviaron las credenciales correctas, una vez presionado _send_, se obtiene el token para ser usado para
+hacer las peticiones.
+5) A partir de haber obtenido un token válido, se puede tener acceso a los productos de la API Rest.
+
+Ejemplo: 
+1) Realizar un petición GET a la ruta api/products
+2) En la pestaña "Autorización", seleccionar la opción "Bearer Token", y colocar el _token_ del paso anterior.

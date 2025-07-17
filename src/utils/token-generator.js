@@ -11,4 +11,13 @@ export const generateToken = (userData) => {//la función recibe la info del usu
 
     return jwt.sign(user, secret_key, expiration);
     //jwt: librería sign:método - las demás son variables - Generamos y rertornamos un nuevo tokenId
-}
+};
+
+const admin_key = process.env.JWT_SECRET_KEY;
+
+export const generateTokenAdmin = (admData) =>{
+    const adm = {id: admData.id, email: admData.email};
+    const expiration = {expiresIn: null};
+
+    return jwt.sign(adm, admin_key, expiration);
+};

@@ -3,6 +3,7 @@ import "dotenv/config";
 import express from 'express';
 import cors from "cors";
 import bodyParser from "body-parser";
+
 //Comillas dobles en la clave es un JSON (es un archivo de texto)
 //Sin comillas dobles en la clave es un objeto de JS
 //El MODELO es el que maneja los DATOS
@@ -12,7 +13,6 @@ const app = express();
 /* app.use((req, res, next) =>{
   res.json({message: "En mantenimiento"});
 }); */
-
 app.use(cors());
 app.use(express.json());//siempre antes de todas las rutas, necesario para hacer un POST
                         //para obtener los datos cuando vienen 
@@ -27,13 +27,21 @@ app.use("/api",productsRouter);//Cuando venga la petición va a buscar en /api/p
 //import productsV1Router from './src/routes/products.router.js';Le indico donde están las rutas
 //app.use("/api/v1",productsV1Router);Por si tengo una versión posterior de la api
  
+
+
 //==========AGREGAMOS EL ROUTER DE AUTENTICACIÓN============
 import authRouter from './src/routes/auth.routes.js';
+import { admAutentic, autenticacion } from "./src/middlewares/authentication.js";
 //import bodyParser from "body-parser";
 app.use(bodyParser.json());//bodyParser.json(): middleware global que permite leer el body de las peticiones
-//Routes
-app.use('/auth', authRouter);//Solo protejo la ruta: POST /auth/login
+
+//Agregao protección a las Routes
+app.use('/auth', authRouter, admAutentic);//Solo protejo la ruta de auth: POST /auth/login
+app.use('/api', productsRouter, autenticacion);//protejo todas las rutas que permiten acceder a los endpoints
 //==========================================================
+
+
+
 
 //ERROR HANDLE (404)
 //Para mandar un error desde el Middleware, lo anterior fueron errores lanzados por mi HTML controlados x Express
