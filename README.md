@@ -69,8 +69,8 @@ _PRUEBAS DE AUTENTICACIÓN_
 Para validar que todo funcione correctamente se utlizó POSTMAN:
 1) Mediante el método POST, el usuario tiene que apuntar a la ruta http://localhost:3000/auth/login (Para ingresar como usuario)(3000 es el puerto configurado en la aplicación)
 
-    email: "2118crz@gmail.com",
-    password: "strongpass123"
+    "email": "2118crz@gmail.com",
+    "password": "strongpass123"
 
     
 2) En el body las credenciales en formato JSON.

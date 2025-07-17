@@ -2,7 +2,7 @@
 import "dotenv/config";
 import express from 'express';
 import cors from "cors";
-import bodyParser from "body-parser";
+//import bodyParser from "body-parser";
 
 //Comillas dobles en la clave es un JSON (es un archivo de texto)
 //Sin comillas dobles en la clave es un objeto de JS
@@ -31,13 +31,20 @@ app.use("/api",productsRouter);//Cuando venga la petición va a buscar en /api/p
 
 //==========AGREGAMOS EL ROUTER DE AUTENTICACIÓN============
 import authRouter from './src/routes/auth.routes.js';
-import { admAutentic, autenticacion } from "./src/middlewares/authentication.js";
+import { autenticacion } from "./src/middlewares/authentication.js";
+import { getAllProducts } from "./src/models/products.model.js";
+import { crearNuevoProduct } from "./src/controllers/products.controller.js";
 //import bodyParser from "body-parser";
-app.use(bodyParser.json());//bodyParser.json(): middleware global que permite leer el body de las peticiones
+//app.use(bodyParser.json());//bodyParser.json(): middleware global que permite leer el body de las peticiones
 
-//Agregao protección a las Routes
-app.use('/auth', authRouter, admAutentic);//Solo protejo la ruta de auth: POST /auth/login
-app.use('/api', productsRouter, autenticacion);//protejo todas las rutas que permiten acceder a los endpoints
+const router = express.Router();
+//Agrego protección a las Routes
+router.get('/products', autenticacion, getAllProducts);
+app.use('/auth', authRouter);
+app.use('/api', router);
+router.post('/products', crearNuevoProduct);
+
+//protejo todas las rutas que permiten acceder a los endpoints
 //==========================================================
 
 

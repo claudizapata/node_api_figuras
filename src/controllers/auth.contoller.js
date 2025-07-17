@@ -1,6 +1,6 @@
 
 import {generateToken}from '../utils/token-generator.js';
-import {generateTokenAdmin}from '../utils/token-generator.js';
+//import {generateTokenAdmin}from '../utils/token-generator.js';
 
 
 
@@ -25,8 +25,9 @@ export async function login(req, res){//el usuario realiza petición a la ruta d
     };
 };
 
-
-const adm_user = {//Genera el objeto administrador (usuario real registrado)
+/* 
+const adm_user = {//Genera el objeto administrador (usuario real reemail: "2118crz@gmail.com",
+    password: "strongpass123",
     id: 1,
     email: "crz29@hotmail.com",
     password: "strongpass123"
@@ -44,4 +45,4 @@ export async function admLogin(req, res){//el usuario realiza petición a la rut
     }else{
         res.sendStatus(401).json({Error:"Las credenciales de admnistrador no son válidas"});
     }
-}
+} */
