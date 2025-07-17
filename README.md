@@ -65,14 +65,21 @@ ruta: _src/routes/auth.routes.js_ donde se atiende al endpoint /login mediante e
 controlador: src/controllers/auth.controller.js    (El cliente realizará una petición a la ruta de /login enviando en el body de la misma el _email_ y la _password_ que deberán coincidir con un usuario real registrado, lo cual consta en "default_user" de este archivo). Si coinciden, se crea un _token_ para este usuario mediante _generateToken_
 
 _PRUEBAS DE AUTENTICACIÓN_
+
 Para validar que todo funcione correctamente se utlizó POSTMAN:
-1) Mediante el método POST, se apunta a la ruta _/auth/login_
-2) en el body las credenciales de default_user en formato JSON
+1) Mediante el método POST, el usuario tiene que apuntar a la ruta http://localhost:3000/auth/login (Para ingresar como usuario)
+
+    email: "2118crz@gmail.com",
+    password: "strongpass123"
+
+    
+2) En el body las credenciales en formato JSON.
 3) Presionar _send_ 
 4) Si se enviaron las credenciales correctas, una vez presionado _send_, se obtiene el token para ser usado para
-hacer las peticiones.
+hacer las peticiones. Se debe copiar el token para utilizarlo en las peticiones a la BD "productos".
 5) A partir de haber obtenido un token válido, se puede tener acceso a los productos de la API Rest.
 
 Ejemplo: 
-1) Realizar un petición GET a la ruta api/products
-2) En la pestaña "Autorización", seleccionar la opción "Bearer Token", y colocar el _token_ del paso anterior.
+1) Realizar una petición GET a la ruta api/products.
+2) En la pestaña "Autorización", seleccionar la opción "Bearer Token", y pegar el _token_ del paso anterior.
+3) Presionar _send_ para listar los productos con GET.
