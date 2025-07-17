@@ -67,7 +67,7 @@ controlador: src/controllers/auth.controller.js    (El cliente realizará una pe
 _PRUEBAS DE AUTENTICACIÓN_
 
 Para validar que todo funcione correctamente se utlizó POSTMAN:
-1) Mediante el método POST, el usuario tiene que apuntar a la ruta http://localhost:3000/auth/login (Para ingresar como usuario)
+1) Mediante el método POST, el usuario tiene que apuntar a la ruta http://localhost:3000/auth/login (Para ingresar como usuario)(3000 es el puerto configurado en la aplicación)
 
     email: "2118crz@gmail.com",
     password: "strongpass123"
@@ -79,7 +79,7 @@ Para validar que todo funcione correctamente se utlizó POSTMAN:
 hacer las peticiones. Se debe copiar el token para utilizarlo en las peticiones a la BD "productos".
 5) A partir de haber obtenido un token válido, se puede tener acceso a los productos de la API Rest.
 
-Ejemplo: 
-1) Realizar una petición GET a la ruta api/products.
+Ejemplo:   
+1) Realizar una petición GET a la ruta http://localhost:3000/api/products.
 2) En la pestaña "Autorización", seleccionar la opción "Bearer Token", y pegar el _token_ del paso anterior.
 3) Presionar _send_ para listar los productos con GET.
